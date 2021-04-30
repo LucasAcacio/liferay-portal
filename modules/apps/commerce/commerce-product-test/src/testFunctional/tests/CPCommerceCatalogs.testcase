@@ -39,7 +39,6 @@ definition {
 	@priority = "3"
 	test AddAnImageToCatalogAndRemove {
 		property portal.acceptance = "false";
-
 		property test.name.skip.portal.instance = "CPCommerceCatalogs#CreateNewCatalog";
 
 		CommerceNavigator.gotoPortlet(
@@ -70,14 +69,14 @@ definition {
 		Alert.viewSuccessMessage();
 
 		Click(
-            key_value = "Test Catalog",
-            locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+			key_value = "Test Catalog",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
-        MenuItem.click(menuItem = "Edit");
+		MenuItem.click(menuItem = "Edit");
 
-		Click(key_value= "Remove Image",
-		locator1= "Button#SECONDARY_BY_TITLE");
-
+		Click(
+			key_value = "Remove Image",
+			locator1 = "Button#SECONDARY_BY_TITLE");
 	}
 
 	test CreateNewCatalog {
@@ -120,6 +119,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6273 EditACatalog
+
 	}
 
 	@description = "This is a test for COMMERCE-6279. EditAPermissionOnACatalog"

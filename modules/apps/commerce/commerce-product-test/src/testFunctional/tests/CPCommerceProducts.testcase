@@ -114,8 +114,6 @@ definition {
 		AssertElementPresent(
 			key_entryName = "Test Specification",
 			locator1 = "CommerceEntry#ENTRY_CONTENT_ROW_BY_NAME");
-
-
 	}
 
 	@description = "This is a test for COMMERCE-6302. AddGroupedProduct"

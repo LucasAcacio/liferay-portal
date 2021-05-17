@@ -195,8 +195,6 @@ definition {
 		AssertElementPresent(
 			key_imageName = "Document_1",
 			locator1 = "AdaptiveMedia#IMAGE_VARIANT_SOURCE_URL");
-
-			
 	}
 
 	@description = "Verify that Numbered Lists can be added to the Body Text"

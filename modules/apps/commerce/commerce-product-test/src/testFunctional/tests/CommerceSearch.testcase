@@ -358,8 +358,6 @@ definition {
 		AssertElementPresent(
 			key_value = "${orderId}",
 			locator1 = "CommerceEntry#ORDER_BY_KEY");
-
-			
 	}
 
 	@description = "COMMERCE-6148. As a buyer, I want to search a product by its name using the Search Bar widget and I want the results to be visible on the Search Results widget"

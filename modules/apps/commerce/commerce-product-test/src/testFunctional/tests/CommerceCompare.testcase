@@ -238,8 +238,6 @@ definition {
 		AssertElementPresent(
 			key_productName = "Brake Fluid",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
-
-			
 	}
 
 }

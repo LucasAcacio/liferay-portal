@@ -122,7 +122,6 @@ definition {
 	@description = "LPS-89015 - Verify that the multi-select-fields filter the dropdown list according to search terms"
 	@priority = "4"
 	test MultiSelectFieldsFilterDropdownListAccordingSearchTerms {
-
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
@@ -146,7 +145,7 @@ definition {
 		Type(
 			locator1 = "WorkflowMetricsSLA#SLA_INPUT_PAUSE",
 			value1 = "Task");
-		
+
 		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_START");
 
 		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_PAUSE");
@@ -168,7 +167,6 @@ definition {
 		AssertElementPresent(
 			key_slaDefinitionEnd = "Process Ends: Approved",
 			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_STOP_OPTION");
-
 	}
 
 	@description = "LPS-89015 - Verify that the multi-select-fields provide feedback when typing terms that doesn't exist"

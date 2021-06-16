@@ -126,7 +126,6 @@ definition {
 		AssertElementPresent(
 			key_value = "Last 30 Days",
 			locator1 = "WorkflowAllItems#WORKFLOW_FILTER_TAB_NAME");
-
 	}
 
 	@description = "LPS-98233 - Verify that the default date format for en-US in Custom Range filter is MM/DD/YYYY"

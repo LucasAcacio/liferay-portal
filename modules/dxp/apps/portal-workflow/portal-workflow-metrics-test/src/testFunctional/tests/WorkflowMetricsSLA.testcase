@@ -327,11 +327,17 @@ definition {
 	}
 
 	@description = "LPS-89016 - Verify and click on the warning alert when there is no SLA"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test WarningAlertIsDisplayedAndClickableWhenNoSLA {
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67850 WarningAlertIsDisplayedAndClickableWhenNoSLA pending implementation
+		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_NO_SLA_MESSAGE");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_ADD_NEW_SLA_BUTTON");
+
+		AssertElementPresent(
+			key_value = "New SLA",
+			locator1 = "WorkflowAllItems#WORKFLOW_HEADER_TITLE");
 
 	}
 

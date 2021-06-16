@@ -89,6 +89,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_ADD_NEW_SLA_BUTTON</td>
+	<td>//a[contains(text(),'Add a new SLA')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_ALL_ITEMS_TABLE_INSTANCE</td>
 	<td>//td[(3) and contains(text(),'${key_instanceInfo}')]</td>
 	<td></td>

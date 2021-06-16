@@ -338,7 +338,6 @@ definition {
 		AssertElementPresent(
 			key_value = "New SLA",
 			locator1 = "WorkflowAllItems#WORKFLOW_HEADER_TITLE");
-
 	}
 
 }

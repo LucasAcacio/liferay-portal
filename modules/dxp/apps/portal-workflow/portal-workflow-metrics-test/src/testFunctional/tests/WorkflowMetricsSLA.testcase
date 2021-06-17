@@ -264,11 +264,34 @@ definition {
 	}
 
 	@description = "LPS-89015 - Verify the options for start field are: Process begins, Enters task: [task-name], and Leaves task: [task-name]"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test StartFieldOptions {
 
-		// TODO LRQA-67882 StartFieldOptions pending implementation
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_START");
+
+		AssertElementPresent(
+			key_slaDefinitionStart = "Process Begins",
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_START_OPTION");
+
+		AssertElementPresent(
+			key_slaDefinitionStart = "Enters Task: Review",
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_START_OPTION");
+
+		AssertElementPresent(
+			key_slaDefinitionStart = "Leaves Task: Review",
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_START_OPTION");
+
+		AssertElementPresent(
+			key_slaDefinitionStart = "Enters Task: Update",
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_START_OPTION");
+
+		AssertElementPresent(
+			key_slaDefinitionStart = "Leaves Task: Update",
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_START_OPTION");
 
 	}
 

@@ -266,7 +266,6 @@ definition {
 	@description = "LPS-89015 - Verify the options for start field are: Process begins, Enters task: [task-name], and Leaves task: [task-name]"
 	@priority = "4"
 	test StartFieldOptions {
-
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
@@ -292,7 +291,6 @@ definition {
 		AssertElementPresent(
 			key_slaDefinitionStart = "Leaves Task: Update",
 			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_START_OPTION");
-
 	}
 
 	@description = "LPS-89015 - Verify the options for stop field are: Process ends: [task-name], Enters task: [task-name], and Leaves task: [task-name]"

@@ -276,7 +276,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test StopFieldOptions {
-
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
@@ -302,7 +301,6 @@ definition {
 		AssertElementPresent(
 			key_slaDefinitionEnd = "Process Ends: Approved",
 			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_STOP_OPTION");
-
 	}
 
 	@description = "LPS-89014 - Verify the successful message when creating a SLA"

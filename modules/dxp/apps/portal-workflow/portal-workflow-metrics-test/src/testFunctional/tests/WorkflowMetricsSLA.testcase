@@ -77,19 +77,18 @@ definition {
 	@description = "LPS-89082 - Verify that the error alert will be displayed again when user enters the metrics page again after closing it"
 	@priority = "2"
 	test ErrorAlertIsDisplayedAgainWhenClosed {
-
 		property test.name.skip.portal.instance = "WorkflowMetricsProcessListView#CanOrderByOnTimeItems";
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
-		
+
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
 			slaDefinitionDays = "0",
 			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Leaves Task: Update",
 			slaDefinitionHours = "00:01",
 			slaDefinitionName = "Test",
-			slaDefinitionEnd = "Leaves Task: Update",
 			slaDefinitionStart = "Process Begins");
 
 		Button.clickSave();

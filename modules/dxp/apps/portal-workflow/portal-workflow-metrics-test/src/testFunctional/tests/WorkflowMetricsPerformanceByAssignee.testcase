@@ -201,8 +201,6 @@ definition {
 		Navigator.gotoNavItem(navItem = "Performance");
 
 		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_EMPTY_STATE");
-
-
 	}
 
 	@description = "LPS-97666 - Verify that the card Performance by Assigned provides a vertical scroll if there are more than 5 entries"

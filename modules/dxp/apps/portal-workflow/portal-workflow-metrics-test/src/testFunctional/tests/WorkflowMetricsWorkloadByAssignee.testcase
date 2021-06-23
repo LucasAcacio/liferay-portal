@@ -77,7 +77,6 @@ definition {
 	@description = "LPS-98518 - Verify that the filters values inside (Workload by Assignee) are alphabetically sorted"
 	@priority = "2"
 	test FiltersAreAlphabeticallySorted {
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -138,7 +137,6 @@ definition {
 			key_index = "2",
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_ALL_ASSIGNEES_DROPDOWN_INDEX",
 			value1 = "Update");
-
 	}
 
 	@description = "LPS-98518 - Verify that the filters inside (Workload by Assignee) are applied only after the user moves the cursor out of the dropdown card"

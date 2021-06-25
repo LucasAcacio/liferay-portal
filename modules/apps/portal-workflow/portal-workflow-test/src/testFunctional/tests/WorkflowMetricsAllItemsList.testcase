@@ -41,7 +41,6 @@ definition {
 	@description = "LPS-92052 - Verify that the user is able to click on the table header Assignee to choose the items order (A-Z / Z-A)"
 	@priority = "5"
 	test CanOrderByAssignee {
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		WorkflowMetrics.createUsersAndAssignInstancesWithGroovy(
@@ -92,7 +91,6 @@ definition {
 			key_itemIndex = "3",
 			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_BY_INDEXES",
 			value1 = "3user user3");
-
 	}
 
 	@description = "LPS-130218 - Verify that the user is able to click on the table header Created by to choose the items order (A-Z / Z-A)."

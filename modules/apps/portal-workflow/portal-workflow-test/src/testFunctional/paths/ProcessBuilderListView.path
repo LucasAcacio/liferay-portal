@@ -8,6 +8,7 @@
 <thead>
 <tr><td rowspan="1" colspan="3">ProcessBuilderListView</td></tr>
 </thead>
+
 <tbody>
 
 <tr>
@@ -20,7 +21,6 @@
 	<td>//li[contains(@role,'presentation')]//span[contains(text(),'${key_value}')]</td>
 	<td></td>
 </tr>
-
 
 </tbody>
 </table>

@@ -92,8 +92,6 @@ definition {
 		AssertElementNotPresent(
 			key_value = "Delete",
 			locator1 = "ProcessBuilderListView#UNPUBLISHED_OPTION");
-
-			
 	}
 
 	@description = "Verify that the user is not able to search by Workflow description"

@@ -149,8 +149,6 @@ definition {
 			key_processName = "Z Workflow",
 			key_section = "Published",
 			locator1 = "ProcessBuilderListView#PROCESS_NAME_IN_SECTION_BY_INDEX");
-
-			
 	}
 
 	@description = "Verify that the user is able to reverse sort direction"

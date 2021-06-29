@@ -95,7 +95,6 @@ definition {
 	@description = "LPS-130217 - Verify that the header title Creation Date is underline and bold on mouse hover"
 	@priority = "2"
 	test CreationDateTitleIsUnderlineAndBold {
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -110,7 +109,7 @@ definition {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry",
 			entryTitle = "Blogs Entry Title");
-		
+
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
 		MouseOver(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_CREATION_DATE");
@@ -118,10 +117,9 @@ definition {
 		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_CREATION_DATE_UNDERLINE");
 
 		AssertCssValue(
-				locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_CREATION_DATE_UNDERLINE",
-				locator2 = "color",
-				value1 = "rgba(39, 40, 51, 1)");
-
+			locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_CREATION_DATE_UNDERLINE",
+			locator2 = "color",
+			value1 = "rgba(39, 40, 51, 1)");
 	}
 
 	@description = "LPS-130217 - Verify that once the order/sorting is made by the user, this definition should be preserved when the user change pagination number"

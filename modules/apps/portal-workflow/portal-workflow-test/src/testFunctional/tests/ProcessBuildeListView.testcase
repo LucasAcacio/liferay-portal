@@ -17,6 +17,7 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+
 		else {
 			BlogsEntry.tearDownCP();
 
@@ -72,12 +73,27 @@ definition {
 	}
 
 	@description = "Verify that the user can not delete a published process"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanNotDeletePublishedProcess {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68231 CanNotDeletePublishedProcess pending implementation
+		AssertElementPresent(
+			key_processName = "Single Approver",
+			key_section = "Published",
+			locator1 = "ProcessBuilderListView#PROCESS_NAME_IN_SECTION");
 
+		Click(
+			key_workflowDefinitionTitle = "Single Approver",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
+
+		AssertElementNotPresent(
+			key_value = "Delete",
+			locator1 = "ProcessBuilderListView#UNPUBLISHED_OPTION");
+
+			
 	}
 
 	@description = "Verify that the user is not able to search by Workflow description"

@@ -90,7 +90,6 @@ definition {
 	@description = "Verify that, when entering valid content, the Workflow is published"
 	@priority = "5"
 	test CanPublishWorkflow {
-
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ProcessBuilderSource#CanPublishWorkflow";
 

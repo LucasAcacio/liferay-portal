@@ -97,8 +97,6 @@ definition {
 		AssertElementPresent(
 			key_message = "Workflow assigned to User",
 			locator1 = "ProcessBuilderListView#SUCCESS_MESSAGE_POPUP");
-
-			
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to Web Content Article"

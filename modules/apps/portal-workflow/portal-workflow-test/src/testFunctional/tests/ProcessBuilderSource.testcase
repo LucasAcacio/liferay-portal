@@ -138,8 +138,6 @@ definition {
 		Alert.viewSuccessMessageText(successMessage = "Restored to Revision from");
 
 		KaleoDesigner.viewNodePresent(key_nodeNodeLabel = "update");
-	
-	
 	}
 
 	@description = "Verify that the user is able to save a untitled Workflow"

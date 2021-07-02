@@ -27,7 +27,6 @@ definition {
 	@description = "Verify that the user can delete a Not Published process"
 	@priority = "3"
 	test CanDeleteUnpublishedWorkflow {
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -46,7 +45,6 @@ definition {
 		Alert.viewSuccessMessageText(successMessage = "Workflow deleted successfully.");
 
 		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "Single Approver");
-
 	}
 
 	@description = "Verify that, when duplicating a process, the user is able to edit its title"

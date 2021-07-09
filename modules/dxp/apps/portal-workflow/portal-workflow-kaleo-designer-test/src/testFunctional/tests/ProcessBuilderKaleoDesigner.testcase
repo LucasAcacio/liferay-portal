@@ -18,11 +18,11 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-		else {
-			Workflow.tearDownSpecificWorkflowDefinition(workflowDefinitionTitle = "Edited Workflow Definition");
+		// else {
+		// 	Workflow.tearDownSpecificWorkflowDefinition(workflowDefinitionTitle = "Edited Workflow Definition");
 
-			Workflow.tearDownWorkflowDefinitions();
-		}
+		// 	Workflow.tearDownWorkflowDefinitions();
+		// }
 	}
 
 	@description = "Verify that Action can be added"
@@ -62,11 +62,49 @@ definition {
 	}
 
 	@description = "Verify that the user can add translations"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddTranslations {
 
-		// TODO LRQA-68439 CanAddTranslations pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		LexiconEntry.gotoAdd();
+
+		Click(
+			key_icon = "en-us",
+			locator1 = "KaleoDesigner#ICON_COUNTRY");
+
+		Click(
+			key_icon = "pt-br",
+			locator1 = "KaleoDesigner#UNTRANSLATED_ICON_COUNTRY");
+
+		PortletEntry.inputTitle(title = "Test Title");
+
+		Click(
+			key_icon = "en-us",
+			locator1 = "KaleoDesigner#ICON_COUNTRY");
+
+		Click(
+			key_icon = "fr-fr",
+			locator1 = "KaleoDesigner#UNTRANSLATED_ICON_COUNTRY");
+
+		PortletEntry.inputTitle(title = "Test Title");
+
+		PortletEntry.save();
+
+		Click(
+			key_icon = "en-us",
+			locator1 = "KaleoDesigner#ICON_COUNTRY");
+
+		AssertElementPresent(
+			key_icon = "pt-br",
+			locator1 = "KaleoDesigner#TRANSLATED_ICON_COUNTRY");
+
+		AssertElementPresent(
+			key_icon = "fr-fr",
+			locator1 = "KaleoDesigner#TRANSLATED_ICON_COUNTRY");
 
 	}
 

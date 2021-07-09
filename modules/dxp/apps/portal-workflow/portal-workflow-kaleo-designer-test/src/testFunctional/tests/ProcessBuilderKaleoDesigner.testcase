@@ -18,11 +18,13 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-		// else {
-		// 	Workflow.tearDownSpecificWorkflowDefinition(workflowDefinitionTitle = "Edited Workflow Definition");
 
-		// 	Workflow.tearDownWorkflowDefinitions();
-		// }
+		//else {
+		//	Workflow.tearDownSpecificWorkflowDefinition(workflowDefinitionTitle = "Edited Workflow Definition");
+
+		//	Workflow.tearDownWorkflowDefinitions();
+		//}
+
 	}
 
 	@description = "Verify that Action can be added"
@@ -64,7 +66,6 @@ definition {
 	@description = "Verify that the user can add translations"
 	@priority = "4"
 	test CanAddTranslations {
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -105,7 +106,6 @@ definition {
 		AssertElementPresent(
 			key_icon = "fr-fr",
 			locator1 = "KaleoDesigner#TRANSLATED_ICON_COUNTRY");
-
 	}
 
 	@description = "Verify that user can create transition between nodes from the edge of node"

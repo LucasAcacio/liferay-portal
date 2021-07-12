@@ -122,8 +122,6 @@ definition {
 		AssertElementPresent(
 			key_header = "Single Approver: Blogs Entry Title",
 			locator1 = "WorkflowSubmissions#DETAIL_PAGE_HEADER");
-
-			
 	}
 
 	@description = "Verify if when the task is pending, the "End Date" field is blank"

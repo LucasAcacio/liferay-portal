@@ -123,8 +123,6 @@ definition {
 		AssertElementPresent(
 			key_text = "",
 			locator1 = "WorkflowSubmissions#END_DATE_COLUMN_TEXT");
-
-			
 	}
 
 	@description = "Verify if when the task is approved, the "End Date" field is filled"

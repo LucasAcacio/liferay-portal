@@ -141,8 +141,6 @@ definition {
 			key_index = "6",
 			locator1 = "WorkflowSubmissions#HEADER_INDEX",
 			value1 = "End Date");
-
-			
 	}
 
 	@description = "Verify the kebab menu is not displayed when task is completed"

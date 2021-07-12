@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>WorkflowSubmissions</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WorkflowSubmissions</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>END_DATE_COLUMN_TEXT</td>
+	<td>//td[contains(@class,'lfr-end-date-column')]//a[contains(text(),'${key_text}')]</td>
+	<td></td>
+</tr>
+
+
+</tbody>
+</table>
+</body>
+</html>

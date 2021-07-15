@@ -379,8 +379,6 @@ definition {
 		CalendarScheduler.gotoDetailsViaDialogBox();
 
 		CalendarEvent.viewStatusViaDetails(status = "Pending");
-
-		
 	}
 
 	@description = "Verify that the Calendar Event status changes when approved"

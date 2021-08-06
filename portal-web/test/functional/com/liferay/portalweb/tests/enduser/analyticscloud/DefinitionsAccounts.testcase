@@ -62,8 +62,12 @@ definition {
 		ACUtils.closeAllSessions();
 
 		Pause(locator1 = "30000");
+		
+		Pause(locator1 = "30000");
 
 		ACUtils.launchAC();
+
+		Pause(locator1 = "30000");
 
 		ACProperties.switchProperty(propertyName = "${propertyName}");
 

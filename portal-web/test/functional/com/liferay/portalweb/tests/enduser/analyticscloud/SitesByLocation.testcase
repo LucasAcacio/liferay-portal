@@ -78,10 +78,9 @@ definition {
 		task ("Assert locations appear propperly in the card") {
 
 			// Assert the entries using the locations list declared before
+
 			ACSites.viewGeomapAnalyticsLocationNames(locationList = "${locationList}");
 		}
 	}
-
-	
 
 }

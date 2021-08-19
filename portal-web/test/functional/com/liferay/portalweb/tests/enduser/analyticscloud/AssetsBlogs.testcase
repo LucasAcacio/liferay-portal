@@ -283,6 +283,7 @@ definition {
 	@priority = "5"
 	test BlogsLocationCardShowsViewsByExpectedLocation {
 		property portal.upstream = "quarantine";
+
 		// AC Refactor: This ticket have enviroment issues
 		// AC Refactor ticket: LRAC-8724
 
@@ -323,13 +324,11 @@ definition {
 			ACNavigation.openItem(itemName = "Blogs AC Title");
 		}
 		task ("Assert multiple locations shown in the card") {
+
 			// Assert the entries using the locations list declared before
 
 			ACSites.viewGeomapAnalyticsLocationNames(locationList = "${locationList}");
-
 		}
-
-		
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8386 | Test Summary: Blogs views by technology card shows views by the expected browser"

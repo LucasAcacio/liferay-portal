@@ -280,12 +280,56 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8378 | Test Summary: Blogs location card shows views by the expected location"
-	@ignore = "true"
 	@priority = "5"
 	test BlogsLocationCardShowsViewsByExpectedLocation {
+		property portal.upstream = "quarantine";
+		// AC Refactor: This ticket have enviroment issues
+		// AC Refactor ticket: LRAC-8724
 
-		// TODO LRAC-8378 BlogsLocationCardShowsViewsByExpectedLocation
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
+		task ("Enter blog page and see it as if the user was in other locations (3 would be a good amount)") {
+
+			//A macro to visit the page using diferent locations are missing :(
+
+			// Create a location list so you can use it later ;)
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Enter in the blog page inside AC blogs assets") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Blogs");
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACNavigation.openItem(itemName = "Blogs AC Title");
+		}
+		task ("Assert multiple locations shown in the card") {
+			// Assert the entries using the locations list declared before
+
+			ACSites.viewGeomapAnalyticsLocationNames(locationList = "${locationList}");
+
+		}
+
+		
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8386 | Test Summary: Blogs views by technology card shows views by the expected browser"

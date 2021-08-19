@@ -39,12 +39,49 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8308 | Test Summary: Top 5 locations by session"
-	@ignore = "true"
 	@priority = "3"
 	test LocationsBySession {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8308 LocationsBySession
+		// AC Refactor: Location data issues happen in this ticket
+		// AC Refactor ticket: LRAC-8748
 
+		task ("Add page and connect to AC") {
+			ACUtils.addSiteAndPage();
+
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Visit the page using 5 diferent locations") {
+
+			//A macro to visit the page using diferent locations are missing :(
+
+			// Create a location list so you can use it later ;)
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close session") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Launch AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Assert locations appear propperly in the card") {
+
+			// Assert the entries using the locations list declared before
+			ACSites.viewGeomapAnalyticsLocationNames(locationList = "${locationList}");
+		}
 	}
+
+	
 
 }

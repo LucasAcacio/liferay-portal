@@ -118,17 +118,17 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8820 | Test Summary: There is a list of connected data sources including a table of properties/status"
 	@priority = "5"
 	test ListOfConnectedDataSourcesIncludingTablePropertiesStatus {
-
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
-		
+
 		ACUtils.launchAC();
 
 		ACNavigation.goToSettings();
 
 		ACSettings.goToDataSources();
-		
-		ACDefinitions.viewDataSourceStatus(entry = "Liferay DXP", status = "Active");
 
+		ACDefinitions.viewDataSourceStatus(
+			entry = "Liferay DXP",
+			status = "Active");
 	}
 
 	@description = "Automation ID: LRAC-8128 | Test Summary: View asset added by DXP data source"

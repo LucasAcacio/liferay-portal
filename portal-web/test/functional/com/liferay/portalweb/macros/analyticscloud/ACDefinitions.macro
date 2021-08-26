@@ -31,4 +31,11 @@ definition {
 		Click(locator1 = "ACDefinitions#ATTRIBUTE_NAME");
 	}
 
+	macro viewDataSourceStatus {
+		AssertElementPresent(
+			key_entryName = "${entry}",
+			key_statusName = "${status}",
+			locator1 = "ACDefinitions#DATA_SOURCE_STATUS");
+	}
+
 }

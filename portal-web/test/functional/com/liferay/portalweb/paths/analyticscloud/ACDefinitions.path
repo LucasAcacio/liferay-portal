@@ -27,6 +27,11 @@
 	<td>//div[contains(@class, 'table-root')]//td[text()='${key_dataSourceName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DATA_SOURCE_STATUS</td>
+	<td>//a[contains(text(),'${key_entryName}')]/ancestor::tr//td[6]//span[contains(@class,'label-item') and contains (text(),'${key_statusName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

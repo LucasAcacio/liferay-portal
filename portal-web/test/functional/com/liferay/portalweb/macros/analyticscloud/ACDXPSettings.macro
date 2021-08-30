@@ -27,7 +27,7 @@ definition {
 
 		ACDXPSettings.navToSyncedContactDataMenu();
 
-		if(isSet(userGroup)){
+		if (isSet(userGroup)) {
 			ACDXPSettings.syncContactSingleUserGroupData(userGroup = "${userGroup}");
 		}
 

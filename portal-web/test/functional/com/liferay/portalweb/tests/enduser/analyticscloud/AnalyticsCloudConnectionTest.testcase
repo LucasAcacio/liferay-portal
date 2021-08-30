@@ -229,18 +229,68 @@ definition {
 	@description = "Automation ID: LRAC-8822 | Test Summary: Sync Liferay Data Source Contacts by User Groups"
 	@priority = "4"
 	test SyncDataSourceContactsByGroups {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		property slave.label = "slave-1";
+		property minimum.slave.ram = "24";
 
-		UserGroup.addCP(userGroupName = "User Group Name");
+		task("Add user, group and assign user to group") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+			JSONUserGroup.addUserGroup(
+				userGroupDescription = "User Group Description",
+				userGroupName = "User Group Name");
 
-		ACDXPSettings.navToSyncedContactDataMenu();
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
 
-		ACDXPSettings.syncContactSingleUserGroupData(userGroup = "User Group Name");
+			UserNavigator.gotoUser(userScreenName = "usersn");
+
+			User.assignUserGroupCP(userGroupName = "User Group Name");
+		}
+
+		task("Connect to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(userGroup = "User Group Name");
+		}
+		task ("Login as another user and visit DXP") {
+			Navigator.openURL();
+
+			Pause(locator1 = "5000");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+		}
+
+		task ("Go to Known Individuals tab") {
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToIndividuals();
+
+			ACNavigation.switchTab(tabName = "Known Individuals");
+		}
+
+		task ("Assert that the new user is present") {
+			ACUtils.searchBar(searchItem = "userfn userln");
+
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "userfn userln");
+
+			ACNavigation.switchTab(tabName = "Details");
+
+			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "userea@liferay.com");
+
+			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "userfn");
+		}
 	}
 
 	@description = "Automation ID: LRAC-8823 | Test Summary: Sync Liferay Data Source Contacts by Organizations"

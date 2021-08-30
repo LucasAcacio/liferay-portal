@@ -27,6 +27,10 @@ definition {
 
 		ACDXPSettings.navToSyncedContactDataMenu();
 
+		if(isSet(userGroup)){
+			ACDXPSettings.syncContactSingleUserGroupData(userGroup = "${userGroup}");
+		}
+
 		ACDXPSettings.syncContactData();
 
 		return "${assignedPropertyName}";

@@ -5,7 +5,7 @@ definition {
 
 		var x = "1";
 
-		while(IsElementPresent(dataSourceName = "${dataSourceName}", locator1 ="ACSettings#DATA_SOURCE_NAME")) {
+		while (IsElementPresent(dataSourceName = "${dataSourceName}", locator1 ="ACSettings#DATA_SOURCE_NAME")) {
 			dataSourceName = "${dataSourceName} + ${x}";
 			x = MathUtil.sum("${x}","1");
 		}
@@ -26,6 +26,10 @@ definition {
 			value1 = "${sourceFileName}");
 
 		WaitForVisible(locator1 = "ACSettings#FILE_UPLOAD_SUCCESS_ICON");
+
+		WaitForElementNotPresent(
+			key_text = "Next",
+			locator1 = "Button#ANY_DISABLED");
 
 		Button.clickNext();
 
@@ -66,6 +70,12 @@ definition {
 				}
 			}
 		}
+
+		WaitForElementNotPresent(locator1 = "ACSettings#LOADING_ANIMATION");
+
+		WaitForElementNotPresent(
+			key_text = "Done",
+			locator1 = "Button#ANY_DISABLED");
 
 		Button.click(button = "Done");
 

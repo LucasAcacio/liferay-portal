@@ -133,6 +133,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DATA_SOURCE_NAME</td>
+	<td>//tr//a[contains(text(),'${dataSourceName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DATA_SOURCE_STATUS</td>
 	<td>//div[contains(@class,'data-source-status-root')]//span[text()='${key_dataSourceStatus}']</td>
 	<td></td>

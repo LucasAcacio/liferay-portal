@@ -3,6 +3,13 @@ definition {
 	macro addCSVDataSource {
 		ACSettings.goToDataSources();
 
+		var x = "1";
+
+		while (IsElementPresent(dataSourceName = "${dataSourceName}", locator1 ="ACSettings#DATA_SOURCE_NAME")) {
+			dataSourceName = "${dataSourceName} + ${x}";
+			x = MathUtil.sum("${x}","1");
+		}
+
 		Button.click(button = "Add Data Source");
 
 		Click(

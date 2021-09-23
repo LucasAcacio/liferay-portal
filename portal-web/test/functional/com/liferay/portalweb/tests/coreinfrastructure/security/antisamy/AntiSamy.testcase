@@ -29,31 +29,37 @@ definition {
 	test AssertNoWikiJavascript {
 		property portal.upstream = "quarantine";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		task("Add PG") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "AntiSamy Test Page");
+			SitePages.addPublicPage(pageName = "AntiSamy Test Page");
 
-		Navigator.gotoPage(pageName = "AntiSamy Test Page");
+			Navigator.gotoPage(pageName = "AntiSamy Test Page");
 
-		Portlet.addPG(portletName = "Wiki");
+			Portlet.addPG(portletName = "Wiki");
+		}
 
-		var wikiPageContent = '''
-				<p id='demo'>PASS</p>
+		task("Add front page PG") {
+			var wikiPageContent = '''
+					<p id='demo'>PASS</p>
 
-				<script type='text/javascript'>
-					document.getElementById('demo').innerHTML = 'FAIL';
-				</script>
-			''';
+					<script type='text/javascript'>
+						document.getElementById('demo').innerHTML = 'FAIL';
+					</script>
+				''';
 
-		WikiPage.addFrontPagePG(
-			htmlSource = "true",
-			wikiPageContent = "${wikiPageContent}");
+			WikiPage.addFrontPagePG(
+				htmlSource = "true",
+				wikiPageContent = "${wikiPageContent}");
+		}
 
-		WikiPage.viewPG(
-			wikiPageContent = "PASS",
-			wikiPageTitle = "FrontPage");
+		task("Assert PG content and title") {
+			WikiPage.viewPG(
+				wikiPageContent = "PASS",
+				wikiPageTitle = "FrontPage");
+		}
 	}
 
 	@description = "This is a use case for LPS-112581 and LPS-115803."
@@ -62,69 +68,78 @@ definition {
 		property antisamy.enabled = "true";
 		property test.name.skip.portal.instance = "AntiSamy#AssertSpecificRulesWorksForModel";
 
-		Pause(locator1 = "5000");
 
-		AssertConsoleTextPresent(value1 = "STARTED com.liferay.portal.security.antisamy");
+		task ("Verify address in console") {
+			SAMLNavigation.viewConsoleValue(consoleValue = "STARTED com.liferay.portal.security.antisamy");
+		}
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Knowledge Base");
+		task ("Add and view kb Article") {
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Knowledge Base");
 
-		KBArticle.addCP(
-			kbArticleAddViaSource = "true",
-			kbArticleContentSource = '''<p data-test="test">Hello Liferay</p>''',
-			kbArticleTitle = "Test AntiSamy");
+			KBArticle.addCP(
+				kbArticleAddViaSource = "true",
+				kbArticleContentSource = '''<p data-test="test">Hello Liferay</p>''',
+				kbArticleTitle = "Test AntiSamy");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+			KBAdmin.openKBAdmin(siteURLKey = "guest");
 
-		KBArticle.viewCP(
-			kbArticleContent = "Hello Liferay",
-			kbArticleTitle = "Test AntiSamy");
+			KBArticle.viewCP(
+				kbArticleContent = "Hello Liferay",
+				kbArticleTitle = "Test AntiSamy");
+		}
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Knowledge Base");
+		task ("Edit kb article and save as draft") {
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Knowledge Base");
 
-		Click(
-			key_rowEntry = "Test AntiSamy",
-			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+			Click(
+				key_rowEntry = "Test AntiSamy",
+				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
-		MenuItem.click(menuItem = "Edit");
+			MenuItem.click(menuItem = "Edit");
 
-		Button.clickSaveAsDraft();
+			Button.clickSaveAsDraft();
+		}
 
-		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
+		task ("Assert CKEditor source value") {
+			Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 
-		Click.clickAtNotVisible(locator1 = "CKEditor#BODY_FIELD_SOURCE_ON");
+			Click.clickAtNotVisible(locator1 = "CKEditor#BODY_FIELD_SOURCE_ON");
 
-		AssertTextEquals.assertValue(
-			locator1 = "CKEditor#BODY_SOURCE_VALUE",
-			value1 = "<p>Hello Liferay</p>");
+			AssertTextEquals.assertValue(
+				locator1 = "CKEditor#BODY_SOURCE_VALUE",
+				value1 = "<p>Hello Liferay</p>");
+		}
 
-		Navigator.openURL();
+		task("Edit configuration file url") {
+			Navigator.openURL();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Security Tools",
-			configurationName = "AntiSamy Sanitizer by Class Name",
-			configurationScope = "System Scope");
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Security Tools",
+				configurationName = "AntiSamy Sanitizer by Class Name",
+				configurationScope = "System Scope");
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "com.liferay.knowledge.base.model.KBArticle");
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "com.liferay.knowledge.base.model.KBArticle");
 
-		Type(
-			key_label = "Configuration File URL",
-			locator1 = "TextArea#ANY_LABELED",
-			value1 = "/META-INF/knowledge-base-sanitizer-configuration.xml");
+			Type(
+				key_label = "Configuration File URL",
+				locator1 = "TextArea#ANY_LABELED",
+				value1 = "/META-INF/knowledge-base-sanitizer-configuration.xml");
 
-		SystemSettings.saveConfiguration();
+			SystemSettings.saveConfiguration();
 
-		AssertElementNotPresent(locator1 = "Message#SUCCESS");
+			AssertElementNotPresent(locator1 = "Message#SUCCESS");
+		}
 	}
 
 	@description = "This is a use case for LRQA-42763."

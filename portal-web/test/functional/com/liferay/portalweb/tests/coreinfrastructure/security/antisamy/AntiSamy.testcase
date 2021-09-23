@@ -29,7 +29,7 @@ definition {
 	test AssertNoWikiJavascript {
 		property portal.upstream = "quarantine";
 
-		task("Add PG") {
+		task ("Add PG") {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
 				portlet = "Pages");
@@ -41,7 +41,7 @@ definition {
 			Portlet.addPG(portletName = "Wiki");
 		}
 
-		task("Add front page PG") {
+		task ("Add front page PG") {
 			var wikiPageContent = '''
 					<p id='demo'>PASS</p>
 
@@ -55,7 +55,7 @@ definition {
 				wikiPageContent = "${wikiPageContent}");
 		}
 
-		task("Assert PG content and title") {
+		task ("Assert PG content and title") {
 			WikiPage.viewPG(
 				wikiPageContent = "PASS",
 				wikiPageTitle = "FrontPage");
@@ -67,7 +67,6 @@ definition {
 	test AssertSpecificRulesWorksForModel {
 		property antisamy.enabled = "true";
 		property test.name.skip.portal.instance = "AntiSamy#AssertSpecificRulesWorksForModel";
-
 
 		task ("Verify address in console") {
 			SAMLNavigation.viewConsoleValue(consoleValue = "STARTED com.liferay.portal.security.antisamy");
@@ -95,26 +94,16 @@ definition {
 				category = "Content &amp; Data",
 				portlet = "Knowledge Base");
 
-			Click(
-				key_rowEntry = "Test AntiSamy",
-				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
-
-			MenuItem.click(menuItem = "Edit");
-
-			Button.clickSaveAsDraft();
+			KBArticle.editCP(
+				kbArticleTitle = "Test AntiSamy",
+				saveAsDraft = "true");
 		}
 
 		task ("Assert CKEditor source value") {
-			Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
-
-			Click.clickAtNotVisible(locator1 = "CKEditor#BODY_FIELD_SOURCE_ON");
-
-			AssertTextEquals.assertValue(
-				locator1 = "CKEditor#BODY_SOURCE_VALUE",
-				value1 = "<p>Hello Liferay</p>");
+			CKEditor.assertSourceValue(sourceValue = "<p>Hello Liferay</p>");
 		}
 
-		task("Edit configuration file url") {
+		task ("Edit configuration file url") {
 			Navigator.openURL();
 
 			ApplicationsMenu.gotoPortlet(
@@ -131,10 +120,9 @@ definition {
 				menuItem = "Edit",
 				rowEntry = "com.liferay.knowledge.base.model.KBArticle");
 
-			Type(
-				key_label = "Configuration File URL",
-				locator1 = "TextArea#ANY_LABELED",
-				value1 = "/META-INF/knowledge-base-sanitizer-configuration.xml");
+			SystemSettings.editTextAreaSetting(
+				settingName = "Configuration File URL",
+				settingValue = "/META-INF/knowledge-base-sanitizer-configuration.xml");
 
 			SystemSettings.saveConfiguration();
 
@@ -147,31 +135,34 @@ definition {
 	test AssertWebContentJavascript {
 		property portal.upstream = "quarantine";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		task ("Add public page") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Web Content Display Page");
+			SitePages.addPublicPage(pageName = "Web Content Display Page");
+		}
+		task ("Add and view WC") {
+			Navigator.gotoPage(pageName = "Web Content Display Page");
 
-		Navigator.gotoPage(pageName = "Web Content Display Page");
+			Portlet.addPG(portletName = "Web Content Display");
 
-		Portlet.addPG(portletName = "Web Content Display");
+			var webContentContent = '''
+					<p id='demo'>FAIL</p>
 
-		var webContentContent = '''
-				<p id='demo'>FAIL</p>
+					<script type='text/javascript'>
+						document.getElementById('demo').innerHTML = 'PASS';
+					</script>
+				''';
 
-				<script type='text/javascript'>
-					document.getElementById('demo').innerHTML = 'PASS';
-				</script>
-			''';
+			WebContent.addPGViaWCD(
+				webContentContent = "${webContentContent}",
+				webContentTitle = "WC WebContent Title");
 
-		WebContent.addPGViaWCD(
-			webContentContent = "${webContentContent}",
-			webContentTitle = "WC WebContent Title");
-
-		WebContent.viewPGViaWCD(
-			webContentContent = "PASS",
-			webContentTitle = "Web Content Title");
+			WebContent.viewPGViaWCD(
+				webContentContent = "PASS",
+				webContentTitle = "Web Content Title");
+		}
 	}
 
 }

@@ -60,6 +60,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.remote.app.model.RemoteAppEntry;
+import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.style.book.model.StyleBookEntry;
@@ -130,6 +132,7 @@ public class BundleSiteInitializerTest {
 			_assertLayoutPageTemplateEntry(group);
 			_assertLayouts(group);
 			_assertObjectDefinition(group);
+			_assertRemoteAppEntries(group);
 			_assertStyleBookEntry(group);
 
 			GroupLocalServiceUtil.deleteGroup(group);
@@ -377,6 +380,44 @@ public class BundleSiteInitializerTest {
 				group.getGroupId(), objectDefinition.getObjectDefinitionId()));
 	}
 
+	private void _assertRemoteAppEntries(Group group) throws Exception{
+		Integer remoteAppEntriesCount = _remoteAppEntryLocalService.getRemoteAppEntriesCount();
+
+		List<RemoteAppEntry> remoteAppEntries = _remoteAppEntryLocalService.getRemoteAppEntries(remoteAppEntriesCount - 1, remoteAppEntriesCount);
+		RemoteAppEntry remoteAppEntry1 = remoteAppEntries.get(0);
+
+		Assert.assertNotNull(remoteAppEntry1);
+
+		String nameXML = remoteAppEntry1.getName();
+		String[] elementCSSUrLs = remoteAppEntry1.getCustomElementCSSURLs().split("\n");
+		String[] elementUrls = remoteAppEntry1.getCustomElementURLs().split("\n");
+		String[] properties = remoteAppEntry1.getProperties().split("\n");
+
+		Assert.assertEquals(
+			true
+			, nameXML.contains("Test Liferay Remote App"));
+
+		Assert.assertEquals(
+			2
+			, elementCSSUrLs.length);
+
+		Assert.assertEquals(
+			"liferay-remote-app-test"
+			,remoteAppEntry1.getCustomElementHTMLElementName());
+
+		Assert.assertEquals(
+			3
+			,elementUrls.length);
+
+		Assert.assertEquals(
+			"category.remote-apps"
+			,remoteAppEntry1.getPortletCategoryName());
+
+		Assert.assertEquals(
+			2
+			,properties.length);
+	}
+
 	private void _assertStyleBookEntry(Group group) {
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.fetchStyleBookEntry(
@@ -446,6 +487,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private RemoteAppEntryLocalService _remoteAppEntryLocalService;
 
 	@Inject
 	private ServletContext _servletContext;

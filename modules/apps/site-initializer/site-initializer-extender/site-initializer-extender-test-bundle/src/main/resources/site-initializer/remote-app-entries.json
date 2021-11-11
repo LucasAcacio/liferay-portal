@@ -1,0 +1,24 @@
+[
+	{
+		"cssURLs": [
+			"/site-initializer/documents/remote-app/css1.css",
+			"/site-initializer/documents/remote-app/css2.css"
+		],
+		"elementURLs": [
+			"/site-initializer/documents/remote-app/2.js",
+			"/site-initializer/documents/remote-app/main.js",
+			"/site-initializer/documents/remote-app/runtime-main.js"
+		],
+		"htmlElementName": "liferay-remote-app-test",
+		"name_i18n": {
+			"en_US": "Test Liferay Remote App"
+		},
+		"portletCategoryName": "category.remote-apps",
+		"properties": {
+			"testremoteappproperty1": "test-remote-app-property-1",
+			"testremoteappproperty2": "test-remote-app-property-2"
+		},
+		"remoteAppEntryKey": "TEST",
+		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_Test"
+	}
+]

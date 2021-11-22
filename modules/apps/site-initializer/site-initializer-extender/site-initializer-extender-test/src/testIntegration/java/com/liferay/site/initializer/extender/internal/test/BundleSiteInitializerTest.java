@@ -80,6 +80,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.remote.app.model.RemoteAppEntry;
+import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.style.book.model.StyleBookEntry;
@@ -155,6 +157,7 @@ public class BundleSiteInitializerTest {
 			_assertLayoutSets(group);
 			_assertObjectDefinition(group);
 			_assertPermissions(group);
+			_assertRemoteAppEntries(group);
 			_assertStyleBookEntry(group);
 		}
 		finally {
@@ -560,6 +563,16 @@ public class BundleSiteInitializerTest {
 		_assertResourcePermission(group);
 	}
 
+	private void _assertRemoteAppEntries(Group group) throws Exception {
+		List<RemoteAppEntry> remoteAppEntries =
+			_remoteAppEntryLocalService.getRemoteAppEntries(0, 1);
+
+		RemoteAppEntry remoteAppEntry1 = remoteAppEntries.get(0);
+
+		Assert.assertEquals(
+			group.getCompanyId(), remoteAppEntry1.getCompanyId());
+	}
+
 	private void _assertResourcePermission(Group group) throws Exception {
 		Role role = _roleLocalService.fetchRole(
 			group.getCompanyId(), "Test Role 1");
@@ -686,6 +699,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private RemoteAppEntryLocalService _remoteAppEntryLocalService;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

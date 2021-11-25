@@ -49,7 +49,9 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -545,6 +547,27 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals(
 			"Test Integration",listTypeDefinition.getName());
+
+		_assertListTypeEntries(group, listTypeDefinition);
+	}
+
+	private void _assertListTypeEntries(
+		Group group, ListTypeDefinition listTypeDefinition)
+		throws Exception {
+
+		List<ListTypeEntry> listTypeEntries = _listTypeEntryLocalService.getListTypeEntries(0,2);
+
+		ListTypeEntry listTypeEntry1 = listTypeEntries.get(0);
+		ListTypeEntry listTypeEntry2 = listTypeEntries.get(1);
+
+		Assert.assertNotNull(listTypeEntry1);
+		Assert.assertNotNull(listTypeEntry2);
+
+		Assert.assertEquals(
+			"Key1", listTypeEntry1.getKey());
+
+		Assert.assertEquals(
+			"Key2", listTypeEntry2.getKey());
 	}
 
 	private void _assertObjectDefinition(Group group) throws Exception {
@@ -695,6 +718,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	@Inject
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

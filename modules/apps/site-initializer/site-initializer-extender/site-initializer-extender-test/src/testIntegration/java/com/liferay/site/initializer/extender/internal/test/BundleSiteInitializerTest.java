@@ -50,7 +50,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
-import com.liferay.list.type.service.ListTypeDefinitionLocalService
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -538,24 +538,24 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertListTypeDefinitions(Group group) throws Exception {
-		List<ListTypeDefinition> listTypeDefinitions =
-			_listTypeDefinitionLocalService.getListTypeDefinitions(0,1);
-
-		ListTypeDefinition listTypeDefinition = listTypeDefinitions.get(0);
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.
+				getListTypeDefinitionByUuidAndCompanyId(
+					group.getUuid(), group.getCompanyId());
 
 		Assert.assertNotNull(listTypeDefinition);
 
-		Assert.assertEquals(
-			"Test Integration",listTypeDefinition.getName());
+		Assert.assertEquals("Test Integration", listTypeDefinition.getName());
 
-		_assertListTypeEntries(group, listTypeDefinition);
+		_assertListTypeEntries(listTypeDefinition);
 	}
 
-	private void _assertListTypeEntries(
-		Group group, ListTypeDefinition listTypeDefinition)
+	private void _assertListTypeEntries(ListTypeDefinition listTypeDefinition)
 		throws Exception {
 
-		List<ListTypeEntry> listTypeEntries = _listTypeEntryLocalService.getListTypeEntries(0,2);
+		List<ListTypeEntry> listTypeEntries =
+			_listTypeEntryLocalService.getListTypeEntries(
+				listTypeDefinition.getListTypeDefinitionId());
 
 		ListTypeEntry listTypeEntry1 = listTypeEntries.get(0);
 		ListTypeEntry listTypeEntry2 = listTypeEntries.get(1);
@@ -563,11 +563,9 @@ public class BundleSiteInitializerTest {
 		Assert.assertNotNull(listTypeEntry1);
 		Assert.assertNotNull(listTypeEntry2);
 
-		Assert.assertEquals(
-			"Key1", listTypeEntry1.getKey());
+		Assert.assertEquals("Key1", listTypeEntry1.getKey());
 
-		Assert.assertEquals(
-			"Key2", listTypeEntry2.getKey());
+		Assert.assertEquals("Key2", listTypeEntry2.getKey());
 	}
 
 	private void _assertObjectDefinition(Group group) throws Exception {

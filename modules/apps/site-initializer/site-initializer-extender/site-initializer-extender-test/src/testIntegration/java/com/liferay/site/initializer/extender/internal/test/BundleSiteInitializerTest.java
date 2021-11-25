@@ -48,6 +48,8 @@ import com.liferay.journal.service.JournalFolderService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -153,6 +155,7 @@ public class BundleSiteInitializerTest {
 			_assertLayoutPageTemplateEntry(group);
 			_assertLayouts(group);
 			_assertLayoutSets(group);
+			_assertListTypeDefinitions(group);
 			_assertObjectDefinition(group);
 			_assertPermissions(group);
 			_assertStyleBookEntry(group);
@@ -532,6 +535,18 @@ public class BundleSiteInitializerTest {
 					"lfr-theme:regular:show-header")));
 	}
 
+	private void _assertListTypeDefinitions(Group group) throws Exception {
+		List<ListTypeDefinition> listTypeDefinitions =
+			_listTypeDefinitionLocalService.getListTypeDefinitions(0,1);
+
+		ListTypeDefinition listTypeDefinition = listTypeDefinitions.get(0);
+
+		Assert.assertNotNull(listTypeDefinition);
+
+		Assert.assertEquals(
+			"Test Integration",listTypeDefinition.getName());
+	}
+
 	private void _assertObjectDefinition(Group group) throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
@@ -677,6 +692,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Inject
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

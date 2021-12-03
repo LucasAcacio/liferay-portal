@@ -38,8 +38,10 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.fragment.model.FragmentEntry;
@@ -156,6 +158,7 @@ public class BundleSiteInitializerTest {
 			_assertDDMStructure(group);
 			_assertDDMTemplate(group);
 			_assertDLFileEntry(group);
+			_assertForm(group);
 			_assertFragmentEntries(group);
 			_assertJournalArticles(group);
 			_assertLayoutPageTemplateEntry(group);
@@ -435,6 +438,25 @@ public class BundleSiteInitializerTest {
 		Assert.assertTrue(string.contains("1. Genesis"));
 		Assert.assertTrue(string.contains("## New Testament"));
 		Assert.assertTrue(string.contains("1. Revelation"));
+	}
+
+	private void _assertForm(Group group) {
+		List<DDMFormInstance> ddmFormInstances =
+			_ddmFormInstanceLocalService.getFormInstances(group.getGroupId());
+
+		Assert.assertNotNull(ddmFormInstances);
+
+		DDMFormInstance ddmFormInstance1 = ddmFormInstances.get(0);
+		Assert.assertNotNull(ddmFormInstance1);
+		Assert.assertEquals(ddmFormInstance1.getName(), "Form Test 1");
+
+		DDMFormInstance ddmFormInstance2 = ddmFormInstances.get(1);
+		Assert.assertNotNull(ddmFormInstance2);
+		Assert.assertEquals(ddmFormInstance2.getName(), "Form Test 2");
+
+		DDMFormInstance ddmFormInstance3 = ddmFormInstances.get(2);
+		Assert.assertNotNull(ddmFormInstance3);
+		Assert.assertEquals(ddmFormInstance3.getName(), "Form Test 3");
 	}
 
 	private void _assertFragmentEntries(Group group) {
@@ -727,6 +749,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private CPOptionLocalService _cpOptionLocalService;
+
+	@Inject
+	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;

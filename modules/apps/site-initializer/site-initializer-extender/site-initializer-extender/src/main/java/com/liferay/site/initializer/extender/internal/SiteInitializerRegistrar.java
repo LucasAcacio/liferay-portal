@@ -16,6 +16,7 @@ package com.liferay.site.initializer.extender.internal;
 
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.commerce.initializer.util.DDMFormImporter;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -71,6 +72,7 @@ public class SiteInitializerRegistrar {
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
 		BundleContext bundleContext,
 		CommerceReferencesHolder commerceReferencesHolder,
+		DDMFormImporter ddmFormImporter,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -115,6 +117,7 @@ public class SiteInitializerRegistrar {
 		_bundle = bundle;
 		_bundleContext = bundleContext;
 		_commerceReferencesHolder = commerceReferencesHolder;
+		_ddmFormImporter = ddmFormImporter;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
@@ -169,13 +172,13 @@ public class SiteInitializerRegistrar {
 			SiteInitializer.class,
 			new BundleSiteInitializer(
 				_assetCategoryLocalService, _assetListEntryLocalService,
-				_bundle, _commerceReferencesHolder, _ddmStructureLocalService,
-				_ddmTemplateLocalService, _defaultDDMStructureHelper,
-				_dlURLHelper, _documentFolderResourceFactory,
-				_documentResourceFactory, _fragmentsImporter,
-				_groupLocalService, _journalArticleLocalService, _jsonFactory,
-				_layoutCopyHelper, _layoutLocalService,
-				_layoutPageTemplateEntryLocalService,
+				_bundle, _commerceReferencesHolder, _ddmFormImporter,
+				_ddmStructureLocalService, _ddmTemplateLocalService,
+				_defaultDDMStructureHelper, _dlURLHelper,
+				_documentFolderResourceFactory, _documentResourceFactory,
+				_fragmentsImporter, _groupLocalService,
+				_journalArticleLocalService, _jsonFactory, _layoutCopyHelper,
+				_layoutLocalService, _layoutPageTemplateEntryLocalService,
 				_layoutPageTemplatesImporter,
 				_layoutPageTemplateStructureLocalService,
 				_layoutSetLocalService, _listTypeDefinitionResource,
@@ -205,6 +208,7 @@ public class SiteInitializerRegistrar {
 	private final Bundle _bundle;
 	private final BundleContext _bundleContext;
 	private final CommerceReferencesHolder _commerceReferencesHolder;
+	private final DDMFormImporter _ddmFormImporter;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;

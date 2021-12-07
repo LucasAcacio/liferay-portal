@@ -330,7 +330,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(() -> _addPermissions(serviceContext));
 
 			_invoke(() -> _addDDMStructures(serviceContext));
-			_invoke(() -> _addForms(serviceContext));
 			_invoke(() -> _addFragmentEntries(serviceContext));
 			_invoke(() -> _addSAPEntries(serviceContext));
 			_invoke(() -> _addStyleBookEntries(serviceContext));
@@ -365,10 +364,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> listTypeDefinitionsStringUtilReplaceValues =
 				_invoke(() -> _addListTypeDefinitions(serviceContext));
 
-			_invoke(
-				() -> _addObjectDefinitions(
-					listTypeDefinitionsStringUtilReplaceValues,
-					serviceContext));
+			Map<String, String> objectDefinitionsIdsStringUtilReplaceValues =
+				_invoke(
+					() -> _addObjectDefinitions(
+						listTypeDefinitionsStringUtilReplaceValues,
+						serviceContext));
+
+			_invoke(() -> _addForms(objectDefinitionsIdsStringUtilReplaceValues, serviceContext));
 
 			Map<String, String> remoteAppEntryIdsStringUtilReplaceValues =
 				_invoke(
@@ -381,7 +383,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					documentsStringUtilReplaceValues,
 					remoteAppEntryIdsStringUtilReplaceValues, serviceContext));
 		}
-		catch (Exception exception) {
+			catch (Exception exception) {
 			_log.error(exception, exception);
 
 			throw new InitializationException(exception);
@@ -1124,7 +1126,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).build();
 	}
 
-	private void _addForms(ServiceContext serviceContext) throws Exception {
+	private void _addForms(
+			Map<String, String> objectDefinitionsIdsStringUtilReplaceValues,
+			ServiceContext serviceContext)
+		throws Exception {
+
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			"/site-initializer/forms");
 
@@ -1134,6 +1140,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		for (String resourcePath : resourcePaths) {
 			String formsJSON = _read(resourcePath);
+
+			formsJSON = StringUtil.replace(
+				formsJSON, "[$", "$]", objectDefinitionsIdsStringUtilReplaceValues);
 
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(formsJSON);
 
@@ -1304,6 +1313,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			json, "[$", "$]",
 			HashMapBuilder.putAll(
 				assetListEntryIdsStringUtilReplaceValues
+			).putAll(
+				formInstanceIdsStringUtilReplaceValues
 			).putAll(
 				documentsStringUtilReplaceValues
 			).putAll(
@@ -1646,7 +1657,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addObjectDefinitions(
+	private Map<String, String> _addObjectDefinitions(
 			Map<String, String> listTypeDefinitionsStringUtilReplaceValues,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -1655,8 +1666,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			"/site-initializer/object-definitions");
 
 		if (SetUtil.isEmpty(resourcePaths)) {
-			return;
+			return Collections.emptyMap();
 		}
+
+		Map<String, String> objectDefinitionsIdsStringUtilReplaceValues = new HashMap<>();
 
 		ObjectDefinitionResource.Builder objectDefinitionResourceBuilder =
 			_objectDefinitionResourceFactory.create();
@@ -1710,6 +1723,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 						existingObjectDefinition.getId(), objectDefinition);
 			}
 
+			objectDefinitionsIdsStringUtilReplaceValues.put(
+				"OBJECT_DEFINITION_ID:" + objectDefinition.getName(),
+				String.valueOf(objectDefinition.getId()));
+
 			String objectEntriesJSON = _read(
 				StringUtil.replaceLast(
 					resourcePath, ".json", ".object-entries.json"));
@@ -1731,6 +1748,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext);
 			}
 		}
+		return objectDefinitionsIdsStringUtilReplaceValues;
 	}
 
 	private void _addPermissions(ServiceContext serviceContext)
